@@ -7,23 +7,6 @@
   *
 * */
 
-// const lineBreak = '-----------------------------------------------------------'
-// const OSRSWiki = "https://oldschool.runescape.wiki/images/thumb/4/46/Old_School_RuneScape_Mobile_icon.png/240px-Old_School_RuneScape_Mobile_icon.png?6b7d1"
-// var resultLinksArray = [];
-// var categoryArray = [];
-// var disambiguationResults = [];
-// var pageDisambiguation = false;
-// var finalReturnLink;
-// var monsterInfo = [];
-//
-// console.log("result");
-// console.log(result);
-// console.log("categoryArray");
-// console.log(categoryArray);
-// console.log("finalReturnLink");
-// console.log(finalReturnLink);
-
-
 const exists = require("url-exists");//NPM package
 const cheerio = require("cheerio");//NPM package
 const Discord = module.require("discord.js");
@@ -221,188 +204,19 @@ module.exports.run = async (OSRSBot, message, args) => {
     console.log("--------------------------------------------------------------------");
   }
   selectorArray.length = 0;
-  console.log(selectorArray.length)
   aboutStatSet.length = 0;
-  console.log(aboutStatSet.length)
   combatinfoStatSet.length = 0;
-  console.log(combatinfoStatSet.length)
   slayerinfoStatSet.length = 0;
-  console.log(slayerinfoStatSet.length)
   combatStatSet.length = 0;
-  console.log(combatStatSet.length)
   aggressiveStatSet.length = 0;
-  console.log(aggressiveStatSet.length)
   defensiveStatSet.length = 0;
-  console.log(defensiveStatSet.length)
   multiMobStats.length = 0;
-  console.log(multiMobStats.length)
   statDataArray.length = 0;
-  console.log(statDataArray.length)
   formatMobStatsArray.length = 0;
-  console.log(formatMobStatsArray.length)
   monsterInfo_RAW.length = 0;
-  console.log(monsterInfo_RAW.length)
   categoryArray.length = 0;
-  console.log(categoryArray.length)
   return;
 
-  //Stuff I might use later.
-
-  // for(var i = 0; i < 1; i++) { //Formats arguments for string matching.
-  //   args[i] = args[i].charAt(0).toUpperCase() + args[i].substr(1);
-  // }
-  // console.log('Loading !lookup');
-  // console.log(message.author.username + ` is looking up these key terms... "` + args.join('" "') + `"`); //returns url with searched terms
-  // const url = `https://oldschool.runescape.wiki/w/Special:Search?search=` + args.join('+') + `&profile=default&fulltext=1&searchToken=bsd3igg05wty54wyfg3pfra8u`;
-  // const errorMessage = "`" + args.join("` `") + "`: seemed to be incorrect search terms, if this is a bug, report it to `Lizardbutt#0377`, please."
-  // const printOutArgs = args.join(" ");
-  //
-  // validateURL(url, function(err, exists){ //validatesURL
-  //   if(!exists) {
-  //     message.delete();
-  //     message.author.send("The OSRS Wikipedia page must be down :(");
-  //     console.log("\x1b[36m" + "Error message sent to user!!!" + "\x1b[0m");
-  //     return;
-  //   }
-  //   console.log("Search page URL validated.\n");
-  //   request({uri: url}, function(error, response, body){ //if URL exists, grab the first url.
-  //     var loadedURL = cheerio.load(body);
-  //     loadedURL(".mw-search-result-heading > a").each(function(){//Loads the url and grabs every loadedURL("ELEMENT");
-  //       var link = loadedURL(this);
-  //       var href = link.attr("href");
-  //       var firstSearchResult = ("https://oldschool.runescape.wiki" + href);
-  //       var resultLinksStringified = JSON.stringify(firstSearchResult);
-  //       resultLinksArray.push(resultLinksStringified);
-  //     });
-  //     if (resultLinksArray.length == 0){
-  //       message.author.send(errorMessage);
-  //       console.log(lineBreak + "\nZero results returned.\nYEET\n" + lineBreak);
-  //       return;
-  //     }
-  //     var selectedLinksArray = resultLinksArray[0].substring(1,((resultLinksArray[0].length)-1));
-  //     const firstSelectedLink = resultLinksArray[0].substring(1,((resultLinksArray[0].length)-1));
-  //     console.log(lineBreak);
-  //     console.log(resultLinksArray);
-  //     console.log(lineBreak + '\n         These were the arguments: ' + printOutArgs + '\n' +
-  //                ("Compared to the firstSelectedLink: " + firstSelectedLink) + '\n' + lineBreak);
-  //     // if(resultLinksArray === undefined || resultLinksArray == 0){
-  //     //   message.delete();
-  //     //   message.author.send(printOutArgs + errorMessage);
-  //     //   console.log(message.author.username + " tried to search with invalid parameters!");
-  //     //   return;
-  //     // }
-  //     if((!firstSelectedLink.includes(args[0] || args[1] || args[2])) && (!firstSelectedLink.includes(args[0].toLowerCase()))) {
-  //       message.channel.send(message.author + ", is this what you were looking for? \n<" + firstSelectedLink + ">");
-  //       console.log("Sent this link `" + firstSelectedLink + "` to " + message.author);
-  //     } else if (selectedLinksArray == undefined){
-  //         message.author.send(errorMessage);
-  //         return;
-  //     } else if (firstSelectedLink.includes(args[0] || args[1] || args[2])) { //check arguments to see if valid, continue on.
-  //         validateURL(firstSelectedLink, function(err, exists){
-  //           if(!exists){
-  //             message.delete();
-  //             message.author.send(errorMessage);
-  //             return;
-  //           } else if(exists) {
-  //             console.log("Redirected URL has been validated o7");
-  //               request({uri:firstSelectedLink}, function(error, response, html){ //request the URL if it exists.
-  //                 var $ = cheerio.load(html);
-  //                 console.log("Connection to firstSelectedLink complete\n" + lineBreak + "\nCategories as follows :");
-  //                 $('.mw-normal-catlinks > ul > li').each(function(){//grabbing page category.
-  //                   var catType = $(this).text();
-  //                   categoryArray.push(catType);
-  //                 });
-  //                 console.log(categoryArray);
-  //                 console.log(lineBreak);
-  //                 if (categoryArray.includes("Disambiguation")){
-  //                   pageDisambiguation = true;
-  //                 } else {
-  //                   pageDisambiguation = false;
-  //                 }
-  //                 if(!pageDisambiguation){
-  //                   console.log("pageDisambiguation is false.");
-  //                   finalReturnLink = firstSelectedLink;
-  //                 } else if(pageDisambiguation){
-  //                   console.log("pageDisambiguation is true.");
-  //                   request({uri:firstSelectedLink}, function(error, response, html, ){ //request the URL if it exists.
-  //                     var $ = cheerio.load(html);
-  //                     console.log(lineBreak);
-  //                     $('.mw-parser-output > ul > li > a').each(function(){//grabbing page category.
-  //                       var disambigType = $(this).text();
-  //                       disambiguationResults.push(disambigType);
-  //                     });
-  //                     console.log(disambiguationResults);
-  //                     var redirectDisambig = ('https://oldschool.runescape.wiki/w/' + disambiguationResults[0].replace(/ /g,"_"));
-  //                     finalReturnLink = firstSelectedLink;
-  //                     console.log(finalReturnLink + ' page selection refined.');
-  //                   });
-  //                 }
-  //                 request({uri:finalReturnLink}, function(error, response, html){
-  //                   var $ = cheerio.load(html);
-  //                   console.log(lineBreak);
-  //                   $('.infobox-monster > tbody> tr').each(function(){
-  //                     var infoboxEntities = $(this);
-  //                     console.log(infoboxEntities);
-  //                     monsterInfo.push(infoboxEntities);
-  //                   });
-  //                   const result = monsterInfo.filter(word => word.length > 0);
-  //                   console.log("result");
-  //                   console.log(result);
-  //                   console.log("categoryArray");
-  //                   console.log(categoryArray);
-  //                   console.log("finalReturnLink");
-  //                   console.log(finalReturnLink);
-  //
-  //                   //make a loop to iterate every element in array, only include if in predefined arrayCriteria. Add to array if exists.
-  //
-  //
-  //
-  //                   // if (categoryArray.includes("Slayer monsters")) {
-  //                   //   // console.log("CONTAINS 'SLAYER MONSTER'");
-  //                   //   // const testEmbed = new Discord.RichEmbed()
-  //                   //   // .setColor('#0099ff')
-  //                   //   // .setTitle(result.toString(result.find(result[0])) + ' (link)')
-  //                   //   // .setURL(finalReturnLink)
-  //                   //   // .setAuthor("OSRS-WikiBot", OSRSWiki)
-  //                   //   // .setDescription(result[5].slice(7, result[5].length) + "\n" + result[1].slice(0,8) + ": " + result[1].slice(8,result[1].length-8))
-  //                   //   // .setThumbnail(OSRSWiki)//needs to be the mob picture.
-  //                   //   // .addField("Combat Info", result[3].slice(0,12) + ": " + result[3].slice(12,result[3].length) + "\n"
-  //                   //   // + result[8].slice(0,9) + ": " +result[8].slice(9,result[8].length) + "\n"
-  //                   //   // + result[9].slice(0,7) + ": " +result[9].slice(7,result[9].length) + "\n"
-  //                   //   // + result[10].slice(0,10) + ": " +result[10].slice(10,result[10].length) + "\n" )
-  //                   //   // .addBlankField()
-  //                   //   // message.channel.send(testEmbed);
-  //                   // } else if(categoryArray.includes("Monsters")) {
-  //                   //   console.log("CONTAINS 'MONSTERS'");
-  //                   // }
-  //                   //filter out specific elements in the results array.
-  //
-  //
-  //                 });
-  //                 //     switch {
-  //                 //       case: //SlayerMonsterPage
-  //                 //         break;
-  //                 //       case: //MonsterPage
-  //                 //         break;
-  //                 //       case: //EquipmentPage
-  //                 //         break;
-  //                 //       case: //ItemPage
-  //                 //         break;
-  //                 //       case: //NPCPage
-  //                 //         break;
-  //                 //       case: //EquipmentPage
-  //                 //         break;
-  //                 //     }
-  //                 // }
-  //             });
-  //           }
-  //         });
-  //       }
-  //   });
-  // });
-  // resultLinksArray.length = 0; //So array doesn't fill up when bot is running.
-  // result.length = 0;
-  // categoryArray.length = 0;
 }
 
 module.exports.help = {

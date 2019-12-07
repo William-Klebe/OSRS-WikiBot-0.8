@@ -30,13 +30,13 @@ fs.readdir("./commands/", (err, files) => { //grabs commandList
   });
 });
 OSRSBot.on("ready", async() => { //on ready do all these.
-  console.log("\x1b[44mReady to meme. YEET\r\x1b[0m"); //YEETUS
+  console.log("\x1b[44mReady to meme. YEET\r\x1b[0m");
   console.log(OSRSBot.commands);//logs all commands
   botActivity = Math.floor((Math.random() * currentActivity.length) + 0);//Grabs random activity
   OSRSBot.user.setActivity(currentActivity[botActivity]);//Displays random activity
 });
 OSRSBot.on("message", async message => { //Messaging handler
-  if(message.author.bot) return; //prevents bot from looping commands, exploit preventer.
+  if(message.author.bot) return; //prevents bot from looping commands
   // if(cooldown.has(message.author.id)){
   //   message.delete();
   //   return message.author.send(`${message.author}, You need to wait 5 seconds between commands`);
@@ -45,7 +45,7 @@ OSRSBot.on("message", async message => { //Messaging handler
   let command = messageArray[0];
   let args = messageArray.slice(1);
   let command_format = OSRSBot.commands.get(command.slice(prefix.length));
-  if(message.author.bot || message.channel.type === "dm") return; //prevents bot from looping commands, exploit preventer. or accepts DM commands
+  if(message.author.bot || message.channel.type === "dm") return; //prevents bot from looping commands, or accepts DM commands
   else { //chat logger.
     console.log(`ClientID:` + message.author + ` ` +
     `GuildID:` + message.guild.id + ` ` +
